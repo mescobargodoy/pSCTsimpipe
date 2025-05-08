@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "psctsimpipe"
+description = "Python module for pSCT sim_telarray SLURM jobs."
+readme = "README.rst"
+version = "0.1"
+authors = [
+  {name = "Miguel Escobar Godoy"},
+]
+maintainers = [
+  {name = "Miguel Escobar Godoy", email = "mescob11@ucsc.edu"}
+]
+requires-python = ">=3.8"
+
+dependencies = [
+  "astropy",
+  "ctapipe",
+  "h5py",
+  "numpy",
+  "pandas",
+  "scipy"
+]
+
+[project.scripts]
+# sim_telarray
+add-histograms = "psctsimpipe.tools.AddHistograms:main"
+check-sim_telarray-logs-status = "psctsimpipe.tools.CheckLogStatus:main"
+psctsimpipe-tools = "psctsimpipe.tools.ShowTools:main"
+resubmit-psct-simtelarray-failed-SLURM-runs = "psctsimpipe.tools.ReSubmitFailedSLURMRuns:main"
+submit-single-simtelarray-SLURM-run = "psctsimpipe.tools.SubmitSingleSLURMRun:main"
+submit-single-psct-simtelarray-SLURM-run = "psctsimpipe.tools.SubmitSinglepSCTSLURMRun:main"
+submit-all-psct-simtelarray-SLURM-run = "psctsimpipe.tools.SubmitFullDirpSCTSLURMRun:main"
+submit-multi-psct-simtelarray-SLURM-run = "psctsimpipe.tools.SubmitMultipSCTSLURMRun:main"
+submit-simtelarray-trigger-rate-SLURM-run = "psctsimpipe.tools.SubmitpSCTTriggerRateSLURMRun:main"
+submit-all-simtelarray-trigger-rate-SLURM-run = "psctsimpipe.tools.SubmitFullDirpSCTTriggerRateSLURMRun:main"
+# ctapipe
+submit-all-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitFullDirCtapipeProcessSLURM:main"
+submit-single-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitSingleCtapipeProcessSLURMRun:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+psctsimpipe = ["data/DAMPE_proton_flux.txt"]
