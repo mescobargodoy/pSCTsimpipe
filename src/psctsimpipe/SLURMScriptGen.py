@@ -14,6 +14,8 @@ def create_slurm_script(
         cpus_per_task=1, 
         t_exp="2:00:00",
         partition="128x24",
+        qos='',
+        account='',
         mail_type='FAIL,END'
         ):
     """
@@ -41,6 +43,13 @@ def create_slurm_script(
         Max time for job to run, by default "2:00:00"
     partition : str, optional
         Which queue the job should run on, by default "128x24"
+        VERITAS/SCT node is "lab-afurniss"
+    qos : str, optional
+        Required to target VERITAS/SCT HB node.
+        Set it to "g-veritas" if this is the case 
+    account : str, optional,
+        Required to target VERITAS/SCT HB node.
+        Set it to "g-veritas" if this is the case
     mail_type : str, optional
         Mail events (one or more of NONE,BEGIN,END,FAIL,ALL), by default 'FAIL,END'
 
@@ -68,6 +77,8 @@ def create_slurm_script(
     #SBATCH --time={t_exp}
     #SBATCH --mem={mem}
     #SBATCH --partition={partition}
+    #SBATCH --qos={qos}
+    #SBATCH --account={account} 
     #SBATCH --output={standard_output}
     #SBATCH --error={standard_error}
 
@@ -93,6 +104,8 @@ def create_supp_slurm_script(
         cpus_per_task=1, 
         t_exp="2:00:00",
         partition="128x24",
+        qos='',
+        account='',
         mail_type='FAIL,END'
         ):
     """
@@ -121,6 +134,12 @@ def create_supp_slurm_script(
         Max time for job to run, by default "2:00:00"
     partition : str, optional
         Which queue the job should run on, by default "128x24"
+    qos : str, optional
+        Required to target VERITAS/SCT HB node.
+        Set it to "g-veritas" if this is the case 
+    account : str, optional,
+        Required to target VERITAS/SCT HB node.
+        Set it to "g-veritas" if this is the case
     mail_type : str, optional
         Mail events (one or more of NONE,BEGIN,END,FAIL,ALL), by default 'FAIL,END'
 
@@ -145,6 +164,8 @@ def create_supp_slurm_script(
     #SBATCH --time={t_exp}
     #SBATCH --mem={mem}
     #SBATCH --partition={partition}
+    #SBATCH --qos={qos}
+    #SBATCH --account={account} 
     #SBATCH --output=/dev/null
     #SBATCH --error=/dev/null
 
@@ -170,6 +191,8 @@ def create_ctapipe_slurm_script(
         cpus_per_task=1, 
         t_exp="2:00:00",
         partition="128x24",
+        qos='',
+        account='',
         mail_type='FAIL,END'
         ):
     """
@@ -197,6 +220,12 @@ def create_ctapipe_slurm_script(
         Max time for job to run, by default "2:00:00"
     partition : str, optional
         Which queue the job should run on, by default "128x24"
+    qos : str, optional
+        Required to target VERITAS/SCT HB node.
+        Set it to "g-veritas" if this is the case 
+    account : str, optional,
+        Required to target VERITAS/SCT HB node.
+        Set it to "g-veritas" if this is the case
     mail_type : str, optional
         Mail events (one or more of NONE,BEGIN,END,FAIL,ALL), by default 'FAIL,END'
 
@@ -225,6 +254,8 @@ def create_ctapipe_slurm_script(
     #SBATCH --time={t_exp}
     #SBATCH --mem={mem}
     #SBATCH --partition={partition}
+    #SBATCH --qos={qos}
+    #SBATCH --account={account} 
     #SBATCH --output={standard_output}
     #SBATCH --error={standard_error}
 

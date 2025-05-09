@@ -124,6 +124,16 @@ def main():
         help="Partition/queue name"
         )
     parser.add_argument(
+        "--qos",
+        default="",
+        help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case."
+    )
+    parser.add_argument(
+        "--account",
+        default="",
+        help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case"
+    )
+    parser.add_argument(
         "--mail-type", 
         default="END,FAIL",
         help="Type of email notification to receive"
@@ -164,6 +174,8 @@ def main():
             args.cpus_per_task,
             args.t_exp,
             args.partition,
+            args.qos,
+            args.account,
             args.mail_type
             )
     
