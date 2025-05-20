@@ -44,7 +44,7 @@ def create_ctapipe_process_command(
 
     output = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "dl1.h5"))        
     log = os.path.join(output_dir,replace_substring(base_file,"simtel.gz","log"))
-    prov = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "prov"))
+    prov = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "provenance.log"))
     command = f"ctapipe-process -i {input_file} -o {output} -c {config} -l {log} --provenance-log {prov}"
 
     return command
