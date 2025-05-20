@@ -38,7 +38,10 @@ submit-simtelarray-trigger-rate-SLURM-run = "psctsimpipe.tools.SubmitpSCTTrigger
 submit-all-simtelarray-trigger-rate-SLURM-run = "psctsimpipe.tools.SubmitFullDirpSCTTriggerRateSLURMRun:main"
 # ctapipe
 submit-all-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitFullDirCtapipeProcessSLURM:main"
+submit-multi-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitMultiCtapipeProcessSLURM:main"
 submit-single-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitSingleCtapipeProcessSLURMRun:main"
+submit-all-ctapipe-merge-SLURM-run = "psctsimpipe.tools.SubmitFullDirCtapipeMergeSLURM:main"
+submit-multi-ctapipe-merge-SLURM-run = "psctsimpipe.tools.SubmitMultiCtapipeMergeSLURM:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

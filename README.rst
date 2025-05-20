@@ -1,16 +1,17 @@
 pSCTsimpipe
 ===========
 
-Python library for processing of `CORSIKA <https://www.iap.kit.edu/corsika/>`_ (cherenkov light) output through `sim_telarray <https://www.mpi-hd.mpg.de/hfm/~bernlohr/sim_telarray/>`__. 
-The tools in this library were developed to run sim_telarray jobs through `SLURM <https://slurm.schedmd.com/documentation.html>`_ for the production of the prototype Schwarzchild-Couder Telescope (pSCT) simulations.
+Python library for processing of the prototype Schwarzchild-Couder Telescope (pSCT) simulations.
+
+Within this repository there are tools to process the `CORSIKA <https://www.iap.kit.edu/corsika/>`_ (cherenkov light) output through `sim_telarray <https://www.mpi-hd.mpg.de/hfm/~bernlohr/sim_telarray/>`_ via `SLURM <https://slurm.schedmd.com/documentation.html>`_ jobs. 
 These tools also work for CORSIKA outputs using different telescope(s) or array configurations besides the pSCT.
 
-To use these tools you will need to have SLURM and sim_telarray and it's dependencies installed although it is not required. These tools have been tested and used extensively at the `HummingBird <https://hummingbird.ucsc.edu/>`_ cluster in UCSC.
+To use these tools you will need to have SLURM and sim_telarray and it's dependencies installed. These tools have been used at the `HummingBird <https://hummingbird.ucsc.edu/>`_ cluster in UC Santa Cruz.
 To install the CORSIKA and sim_telarray versions for `CTAO <https://www.ctao.org/>`_ you can go `here <https://www.mpi-hd.mpg.de/hfm/CTA/MC/Software/>`__. Note it is password protected and only for CTAO users.
 
 There's an extra set of tools to submit multiple `ctapipe <https://github.com/cta-observatory/ctapipe>`_ jobs to SLURM. 
 
-* Code: GitHub
+* Code: `https://github.com/mescobargodoy/pSCTsimpipe <https://github.com/mescobargodoy/pSCTsimpipe>`__
 * Documentation: ReadTheDocs (coming soon hopefully)
 * Contact Miguel Escobar Godoy (mescob11@ucsc.edu)
 
@@ -22,11 +23,16 @@ I recommend installing in a conda environment.
 
     pip install git+https://github.com/mescobargodoy/pSCTsimpipe.git
 
+Requirements
+============
+* sim_telarray and it's dependencies (optional)
+* SLURM in your system (some institutions might already use this as part of a computer cluster)
+* ctapipe and it's dependencies
 
 Usage
 =====
 
-You will need to export the path to your sim_telarray (and HESSIO optionally) installation. sim_telarray is not a required to use this repository.
+If you plan to use sim_telarray, you will need to export the path to your sim_telarray (and HESSIO optionally) installation. 
 
 .. code-block:: bash
 

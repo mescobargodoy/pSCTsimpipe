@@ -18,7 +18,10 @@ def main():
     resubmit-psct-simtelarray-failed-SLURM-runs
     add-histograms
     submit-single-ctapipe-process-SLURM-run
-    submit-all-ctapipe-process-SLURM-run"""
+    submit-all-ctapipe-process-SLURM-run
+    submit-multi-ctapipe-process-SLURM-run                                  
+    submit-all-ctapipe-merge-SLURM-run
+    submit-multi-ctapipe-merge-SLURM-run"""
     )
 
     print(available_tools)

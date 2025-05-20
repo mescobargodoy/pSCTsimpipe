@@ -56,7 +56,7 @@ def main():
         "--run-number-domain",
         type=int,
         nargs=2,
-        help="""Submit jobs corresponding to CORSIKA files between these
+        help="""Submit jobs corresponding to simtel files between these
                 two run numbers (inclusive)""",
         default=[100000,100100]
     )
