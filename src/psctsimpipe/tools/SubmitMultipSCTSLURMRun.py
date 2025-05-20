@@ -22,7 +22,7 @@ def main():
         --input-dir ~CORSIKA/Gamma_Z20 
         --output-dir miguel/data  
         --search-pattern *telescope.tar.gz
-        --run-number-domain 100000 1001000
+        --run-number-domain 100000 100100
         --sim_telarray_cfg pSCT.cfg 
         """
         )
@@ -160,10 +160,10 @@ def main():
         run_num = extract_number(red_CORISKA_input)
         job_name = f"{args.particle_type}{run_num}"
         
-        low_runnum_edge=int(args.run_number_domain[0])
-        high_runnum_edge=int(args.run_number_domain[1])
+        low_run_num_edge=int(args.run_number_domain[0])
+        high_run_num_edge=int(args.run_number_domain[1])
         
-        if low_runnum_edge <= int(run_num) <= high_runnum_edge:
+        if low_run_num_edge <= int(run_num) <= high_run_num_edge:
 
             command = single_sim_telarray_pSCT_run(
                 corsika_f,

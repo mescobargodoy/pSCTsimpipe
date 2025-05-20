@@ -27,8 +27,9 @@ def extract_number(filename):
 
 def extract_run_number_from_simtel(filename):
     """
-    For a given sim_telarray file
+    For a given sim_telarray-naming-based file
     {particle_type}_{ze}_{az}_run#_{telescope_name}-{height}-{night_type}-{NSB}.simtel.gz
+    {particle_type}_{ze}_{az}_run#_{telescope_name}-{height}-{night_type}-{NSB}.dl1.h5
     It extracts the number after run
 
     Parameters

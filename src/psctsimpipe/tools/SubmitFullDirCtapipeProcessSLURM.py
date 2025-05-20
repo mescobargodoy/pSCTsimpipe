@@ -33,9 +33,9 @@ def main():
     parser.add_argument(
         "--output-dir",
         help="""path for ctapipe-process outputs, 
-                commandline standrd output and error files,
+                commandline standard output and error files,
                 and slurm scripts.
-                """
+            """
     )
     parser.add_argument(
         "-c",

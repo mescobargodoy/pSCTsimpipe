@@ -106,7 +106,7 @@ def main():
     parser.add_argument(
         "--account",
         default="",
-        help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case"
+        help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case."
     )
     parser.add_argument(
         "--mail-type", 
