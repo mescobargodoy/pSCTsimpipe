@@ -102,7 +102,7 @@ def create_multi_ctapipe_merge_command(
     if not os.path.exists(input_dir):
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), f"{input_dir}")
     
-    if len(input_list<2):
+    if len(input_list)<2:
         sys.exit("Length of list is less than two but it should be at least greater than or equal two.")
 
     base_name = os.path.basename(os.path.normpath(input_dir))

@@ -169,7 +169,7 @@ def main():
         args.mail_type
         )
     
-    # submit_job(script_path)
+    submit_job(script_path)
     print(f"Job submitted! SLURM script: {script_path}")
     
 if __name__ == "__main__":
