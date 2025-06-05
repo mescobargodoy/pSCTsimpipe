@@ -15,8 +15,8 @@ def main():
             --particle_type gamma
             [OPTIONS]
             """,
-        description="""Submit ctapipe-process runs through SLURM 
-                    for all sim_telarray files in directory.""",
+        description="""Submit ctapipe-process run through SLURM 
+                    for single sim_telarray file.""",
         epilog="""Example: \n 
         submit-single-ctapipe-process-SLURM-run 
         --input-file sim_telarray/gamma.simtel.gz

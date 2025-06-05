@@ -14,7 +14,7 @@ def main():
             -c <cfg> \\
             --particle_type <particle> \\
             --run-number-domain a b \\
-             --search-pattern <pattern>
+            --file-ext <file-extension>
             [OPTIONS]
             """,
         description="""Submit ctapipe-process runs through SLURM 
@@ -26,7 +26,7 @@ def main():
         -c /path/to/ctapipe_config.yaml
         --particle_type gamma
         --run-number-domain 100000 100100
-        --search-pattern *simtel.gz
+        --file-ext simtel.gz
         """
         )
     # ctapipe-process
@@ -61,9 +61,9 @@ def main():
         default=[100000,100100]
     )
     parser.add_argument(
-        "--search-pattern",
-        default="*simtel.gz",
-        help="Give a specific file pattern for matching files"
+        "--file-ext",
+        default="simtel.gz",
+        help="File extension of sim_telarray output to be searched for"
     )
     # SLURM options
     parser.add_argument(
@@ -123,9 +123,9 @@ def main():
     args = parser.parse_args()
 
     files_to_process = find_files(args.input_dir,
-                                  search_pattern=args.search_pattern)
+                                  search_pattern=args.file_ext)
 
-    print(f"Found {len(files_to_process)} files in {args.input_dir} matching pattern {args.search_pattern}.")
+    print(f"Found {len(files_to_process)} files in {args.input_dir} matching pattern {args.file_ext}.")
     print(f"Only processing {args.run_number_domain[1]-args.run_number_domain[0]+1} files.")
 
     for file in files_to_process:
@@ -134,6 +134,7 @@ def main():
             file,
             args.output_dir,
             args.ctapipe_cfg,
+            args.file_ext
             )
         
         base_filename = os.path.basename(file)

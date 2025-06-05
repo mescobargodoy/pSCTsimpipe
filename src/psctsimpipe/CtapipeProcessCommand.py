@@ -7,7 +7,8 @@ from psctsimpipe.Helpers import find_files, replace_substring
 def create_ctapipe_process_command(
         input_file,
         output_dir,
-        config
+        config,
+        file_ext='simtel.gz'
 ):
     """
     Generates ctapipe-process single command
@@ -32,6 +33,9 @@ def create_ctapipe_process_command(
         path to store all output files
     config : string, 
         ctapipe-procecss config file
+    file_type : string
+        File extension of sim_telarray output
+        For example simtel.gz or simtel.zst
     """
 
     if not os.path.exists(input_file):
@@ -42,9 +46,9 @@ def create_ctapipe_process_command(
 
     base_file = os.path.basename(input_file)
 
-    output = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "dl1.h5"))        
-    log = os.path.join(output_dir,replace_substring(base_file,"simtel.gz","log"))
-    prov = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "provenance.log"))
+    output = os.path.join(output_dir,replace_substring(base_file, file_ext, "dl1.h5"))        
+    log = os.path.join(output_dir,replace_substring(base_file, file_ext,"log"))
+    prov = os.path.join(output_dir,replace_substring(base_file, file_ext, "provenance.log"))
     command = f"ctapipe-process -i {input_file} -o {output} -c {config} -l {log} --provenance-log {prov}"
 
     return command
@@ -53,7 +57,8 @@ def create_ctapipe_process_command(
 def create_full_dir_ctapipe_process_command(
         input_dir,
         output_dir,
-        config
+        config,
+        file_ext='simtel.gz'
 ):
     """
    Generates ctapipe-process command for multiple files
@@ -94,7 +99,7 @@ def create_full_dir_ctapipe_process_command(
 
 
     files_to_process = find_files(input_dir,
-                                  search_pattern="*simtel.gz")
+                                  search_pattern=f"*{file_ext}")
     
     commands_to_submit = []
 
@@ -102,9 +107,9 @@ def create_full_dir_ctapipe_process_command(
         
         base_file = os.path.basename(input_file)
 
-        output = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "dl1.h5"))        
-        log = os.path.join(output_dir,replace_substring(base_file,"simtel.gz","log"))
-        prov = os.path.join(output_dir,replace_substring(base_file, "simtel.gz", "provenance.log"))
+        output = os.path.join(output_dir,replace_substring(base_file, file_ext, "dl1.h5"))        
+        log = os.path.join(output_dir,replace_substring(base_file, file_ext,"log"))
+        prov = os.path.join(output_dir,replace_substring(base_file, file_ext, "provenance.log"))
         command = f"ctapipe-process -i {input_file} -o {output} -c {config} -l {log} --provenance-log {prov}"
 
         commands_to_submit.append(command)

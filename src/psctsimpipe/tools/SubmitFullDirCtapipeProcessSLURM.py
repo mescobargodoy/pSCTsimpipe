@@ -23,6 +23,7 @@ def main():
         --output-dir /data  
         -c /path/to/ctapipe_config.yaml
         --particle_type gamma
+        --file-ext simtel.gz
         """
         )
     # ctapipe-process
@@ -47,6 +48,11 @@ def main():
         "--particle_type",
         default="gamma",
         help="particle type (gamma,proton,electron,gamma_diffuse,...)"
+    )
+    parser.add_argument(
+        "--file-ext",
+        default="simtel.gz",
+        help="File extension of sim_telarray output to be searched for"
     )
     # SLURM options
     parser.add_argument(
@@ -106,9 +112,9 @@ def main():
     args = parser.parse_args()
 
     files_to_process = find_files(args.input_dir,
-                                  search_pattern="*simtel.gz")
+                                  search_pattern=f"*{args.file_ext}")
 
-    print(f"Found {len(files_to_process)} .simtel.gz files in {args.input_dir}")
+    print(f"Found {len(files_to_process)} {args.file_ext} files in {args.input_dir}")
 
     for file in files_to_process:
         
@@ -116,6 +122,7 @@ def main():
             file,
             args.output_dir,
             args.ctapipe_cfg,
+            args.file_ext
             )
         
         base_filename = os.path.basename(file)
