@@ -68,6 +68,11 @@ def main():
     )
     # SLURM options
     parser.add_argument(
+        "--conda_env",
+        default="ctapipe",
+        help="conda environment to activate. By default ctapipe"
+    )
+    parser.add_argument(
         "--email", 
         default="",
         help="Email for job notifications"
@@ -127,7 +132,8 @@ def main():
                                   search_pattern=args.search_pattern)
 
     print(f"Found {len(all_files_in_dir)} files in {args.input_dir} matching pattern '{args.search_pattern}'.")
-    print(f"Only merging {args.run_number_domain[1]-args.run_number_domain[0]+1} files.")
+    print(f"Will attempt {args.run_number_domain[1]-args.run_number_domain[0]+1} files.")
+    print("Check the ctapipe log file to check the actual number of files that were merged after the job is done.")
 
     files_to_merge = []
 
@@ -155,7 +161,8 @@ def main():
 
     script_path = create_ctapipe_slurm_script(
         job_name, 
-        command, 
+        command,
+        args.conda_env, 
         args.email, 
         args.output_dir, 
         args.mem, 

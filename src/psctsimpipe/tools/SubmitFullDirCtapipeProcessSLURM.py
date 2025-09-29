@@ -56,6 +56,11 @@ def main():
     )
     # SLURM options
     parser.add_argument(
+        "--conda_env",
+        default="ctapipe",
+        help="conda environment to activate. By default ctapipe"
+    )
+    parser.add_argument(
         "--email", 
         default="",
         help="Email for job notifications"
@@ -114,7 +119,7 @@ def main():
     files_to_process = find_files(args.input_dir,
                                   search_pattern=f"*{args.file_ext}")
 
-    print(f"Found {len(files_to_process)} {args.file_ext} files in {args.input_dir}")
+    print(f"Found {len(files_to_process)} *{args.file_ext} files in {args.input_dir}")
 
     for file in files_to_process:
         
@@ -132,6 +137,7 @@ def main():
         script_path = create_ctapipe_slurm_script(
             job_name, 
             command, 
+            args.conda_env,
             args.email, 
             args.output_dir, 
             args.mem, 

@@ -183,6 +183,7 @@ def create_supp_slurm_script(
 def create_ctapipe_slurm_script(
         job_name,  
         program,
+        conda_env='ctapipe',
         email="", 
         output_dir=".", 
         mem="8G", 
@@ -202,10 +203,12 @@ def create_ctapipe_slurm_script(
     ----------
     job_name : string
         Name for job (shows when running squeue)
-    email : string
-        Where to send mail
     program : string
         command to submit to queue
+    conda_env : string
+        name of conda environment to activate, by default "ctapipe"
+    email : string
+        Where to send mail
     output_dir : str, optional
         where SLURM will send command-line output/error, by default "."
     mem : str, optional
@@ -260,7 +263,7 @@ def create_ctapipe_slurm_script(
     #SBATCH --error={standard_error}
 
     module load miniconda3 
-    conda activate ctapipe
+    conda activate {conda_env}
     {program}
     """)
 
