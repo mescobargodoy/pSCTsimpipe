@@ -4,7 +4,7 @@ import textwrap
 import subprocess
 
 from psctsimpipe.pSCTTriggerRate import trigger_rate_command
-from psctsimpipe.SLURMScriptGen import create_supp_slurm_script, submit_job
+from psctsimpipe.SLURMScriptGen import create_slurm_script, submit_job
 
 def main():
     parser = argparse.ArgumentParser(
@@ -121,11 +121,6 @@ def main():
         )
     # SLURM options
     parser.add_argument(
-        "--job-name", 
-        default="NSBTriggerRate", 
-        help="Job/SLURM-file name (shows when running squeue)"
-        )
-    parser.add_argument(
         "--email", 
         default="",
         help="Email for job notifications"
@@ -179,6 +174,11 @@ def main():
         default="END,FAIL",
         help="Type of email notification to receive"
         )
+    parser.add_argument(
+        "--suprres_stdout_error", 
+        default=False,
+        help="Whether to suppress the standard output and error of slurm report, by default False"
+        )
     args = parser.parse_args()
 
     command = trigger_rate_command(
@@ -201,9 +201,11 @@ def main():
 
     job_name=f"triggthresh{args.discriminator_threshold}pe_pixmult{args.trigger_pixels}_fadc_bins{args.fadc_bins}_fadc_sum_bins{args.fadc_sum_bins}_disc_bins{args.disc_bins}"
     
-    script_path = create_supp_slurm_script(
+    script_path = create_slurm_script(
         job_name, 
         command, 
+        'sim_telarray',
+        None,
         args.email, 
         args.output_dir, 
         args.mem, 
@@ -214,7 +216,8 @@ def main():
         args.partition,
         args.qos,
         args.account,
-        args.mail_type
+        args.mail_type,
+        args.suprres_stdout_error
     )
     
     submit_job(script_path)

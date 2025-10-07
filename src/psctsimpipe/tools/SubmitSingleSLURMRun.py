@@ -121,10 +121,16 @@ def main():
         args.output_histo,
         args.sim_telarray_cfg
     )
-    
+    parser.add_argument(
+        "--suprres_stdout_error", 
+        default=False,
+        help="Whether to suppress the standard output and error of slurm report, by default False"
+        )
     script_path = create_slurm_script(
         args.job_name, 
         command, 
+        'sim_telarray',
+        None,
         args.email, 
         args.output_dir, 
         args.mem, 
@@ -135,7 +141,8 @@ def main():
         args.partition,
         args.qos,
         args.account,
-        args.mail_type
+        args.mail_type,
+        args.suprres_stdout_error
         )
     
     submit_job(script_path)

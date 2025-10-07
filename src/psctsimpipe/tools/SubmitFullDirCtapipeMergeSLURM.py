@@ -2,7 +2,7 @@ import argparse
 import os
 
 from psctsimpipe.CtapipeMergeCommand import create_ctapipe_merge_command
-from psctsimpipe.SLURMScriptGen import create_ctapipe_slurm_script, submit_job
+from psctsimpipe.SLURMScriptGen import create_slurm_script, submit_job
 from psctsimpipe.Helpers import find_files
 
 def main():
@@ -58,6 +58,11 @@ def main():
     )
     # SLURM options
     parser.add_argument(
+        "--conda_env",
+        default="ctapipe",
+        help="conda environment to activate. By default ctapipe"
+    )
+    parser.add_argument(
         "--email", 
         default="",
         help="Email for job notifications"
@@ -98,12 +103,12 @@ def main():
         )
     parser.add_argument(
         "--qos",
-        default="",
+        default=None,
         help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case."
     )
     parser.add_argument(
         "--account",
-        default="",
+        default=None,
         help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case"
     )
     parser.add_argument(
@@ -111,6 +116,11 @@ def main():
         default="END,FAIL",
         help="Type of email notification to receive"
         )
+    parser.add_argument(
+        "--suprres_stdout_error", 
+        default=False,
+        help="Whether to suppress the standard output and error of slurm report, by default False"
+    )
     args = parser.parse_args()
 
     files_to_process = find_files(args.input_dir,
@@ -130,9 +140,11 @@ def main():
     base_filename = os.path.basename(os.path.normpath(args.input_dir))
     job_name = f"{base_filename}.ctapipe-merge"
 
-    script_path = create_ctapipe_slurm_script(
+    script_path = create_slurm_script(
         job_name, 
         command, 
+        'ctapipe',
+        args.conda_env,
         args.email, 
         args.output_dir, 
         args.mem, 
@@ -143,7 +155,8 @@ def main():
         args.partition,
         args.qos,
         args.account,
-        args.mail_type
+        args.mail_type,
+        args.suprres_stdout_error
         )
     
     submit_job(script_path)

@@ -6,6 +6,8 @@ import subprocess
 def create_slurm_script(
         job_name,  
         program,
+        application='',
+        conda_env='ctapipe',
         email="", 
         output_dir=".", 
         mem="8G", 
@@ -14,17 +16,24 @@ def create_slurm_script(
         cpus_per_task=1, 
         t_exp="2:00:00",
         partition="128x24",
-        qos='',
-        account='',
-        mail_type='FAIL,END'
+        qos=None,
+        account=None,
+        mail_type='FAIL,END',
+        suprres_stdout_error=False
         ):
     """
     Generates a SLURM script.
 
     Parameters
     ----------
+    application : string
+        Option that will load modules depending
+        on the program to be run. By default ''
+        Options are sim_telarray, ctapipe, or ''
     job_name : string
         Name for job (shows when running squeue)
+    conda_env : string
+        name of conda environment to activate, by default "ctapipe"
     email : string
         Where to send mail
     program : string
@@ -52,6 +61,8 @@ def create_slurm_script(
         Set it to "g-veritas" if this is the case
     mail_type : str, optional
         Mail events (one or more of NONE,BEGIN,END,FAIL,ALL), by default 'FAIL,END'
+    suprres_stdout_error : bool, optional
+        Whether to suppress the standard output and error of slurm report, by default False
 
     Returns
     -------
@@ -76,16 +87,52 @@ def create_slurm_script(
     #SBATCH --cpus-per-task={cpus_per_task}   
     #SBATCH --time={t_exp}
     #SBATCH --mem={mem}
-    #SBATCH --partition={partition}
-    #SBATCH --qos={qos}
-    #SBATCH --account={account} 
-    #SBATCH --output={standard_output}
-    #SBATCH --error={standard_error}
-
-    module load gnu13 
-    module load gsl
-    {program}
+    #SBATCH --partition={partition} 
     """)
+    
+    if qos != None and account != None:
+        qos_and_account = textwrap.dedent(f"""\
+        #SBATCH --qos={qos}
+        #SBATCH --account={account}
+        """)
+        script_content = script_content + qos_and_account
+
+    if suprres_stdout_error:
+        std_error_options = textwrap.dedent(f"""\
+        #SBATCH --output=/dev/null
+        #SBATCH --error=/dev/null
+                                            
+        """)
+        script_content = script_content + std_error_options
+    else:
+        std_error_options = textwrap.dedent(f"""\
+        #SBATCH --output={standard_output}
+        #SBATCH --error={standard_error}
+                                            
+        """)
+        script_content = script_content + std_error_options
+
+    if application == 'sim_telarray':
+        modules = textwrap.dedent(f"""\
+        module load gnu13
+        module load gsl
+        {program}                          
+        """)
+        script_content = script_content + modules
+
+    elif application == 'ctapipe':
+        modules = textwrap.dedent(f"""\
+        module load miniconda3
+        conda activate {conda_env}
+        {program}                          
+        """)
+        script_content = script_content + modules
+
+    else:
+        modules = textwrap.dedent(f"""\
+        {program}                          
+        """)
+        script_content = script_content + modules
 
     script_path = os.path.join(output_dir, f"{job_name}.slurm")
     with open(script_path, "w") as script_file:

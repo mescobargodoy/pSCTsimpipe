@@ -2,7 +2,7 @@ import argparse
 import os
 
 from psctsimpipe.CtapipeProcessCommand import create_ctapipe_process_command
-from psctsimpipe.SLURMScriptGen import create_ctapipe_slurm_script, submit_job
+from psctsimpipe.SLURMScriptGen import create_slurm_script, submit_job
 from psctsimpipe.Helpers import extract_run_number_from_simtel
 
 
@@ -96,12 +96,12 @@ def main():
         )
     parser.add_argument(
         "--qos",
-        default="",
+        default=None,
         help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case."
     )
     parser.add_argument(
         "--account",
-        default="",
+        default=None,
         help="Required to target VERITAS/SCT HB node. Set it to g-veritas if this is the case"
     )
     parser.add_argument(
@@ -109,6 +109,11 @@ def main():
         default="END,FAIL",
         help="Type of email notification to receive"
         )
+    parser.add_argument(
+        "--suprres_stdout_error", 
+        default=False,
+        help="Whether to suppress the standard output and error of slurm report, by default False"
+    )
     args = parser.parse_args()
         
     command = create_ctapipe_process_command(
@@ -123,9 +128,10 @@ def main():
     run_num = extract_run_number_from_simtel(base_filename)
     job_name = f"{args.particle_type}{run_num}"
 
-    script_path = create_ctapipe_slurm_script(
+    script_path = create_slurm_script(
         job_name, 
         command, 
+        'ctapipe',
         args.conda_env,
         args.email, 
         args.output_dir, 
@@ -137,7 +143,8 @@ def main():
         args.partition,
         args.qos,
         args.account,
-        args.mail_type
+        args.mail_type,
+        args.suprres_stdout_error
     )
     
     submit_job(script_path)

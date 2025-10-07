@@ -138,7 +138,7 @@ def read_DAMPE_flux(input_table):
     """
     Used to read in cosmic proton flux
     measured by DAMPE stored in
-    pSCTsimpipe/data/
+    psctsimpipe/data/
 
     Parameters
     ----------
@@ -186,7 +186,7 @@ def interpolated_DAMPE_flux(Energy):
         numpy.array
     """
 
-    with importlib.resources.open_binary("pSCTsimpipe.data", "DAMPE_proton_flux.txt") as f:
+    with importlib.resources.open_binary("psctsimpipe.data", "DAMPE_proton_flux.txt") as f:
         data = read_DAMPE_flux(f)   
         DAMPE_energy = data["E"]/1000 # GeV to TeV
         DAMPE_flux = data['F_invGeV_invsqmeter_inversec_invsr']*1000 #GeV^-1 to TeV^-1 m^-2 sr^-1 s^-1
@@ -207,9 +207,9 @@ def interpolated_DAMPE_flux(Energy):
 def display_DAMPE_flux():
     """
     Displays the information contained in 
-    pSCTsimpipe/data/DAMPE_proton_flux.txt
+    psctsimpipe/data/DAMPE_proton_flux.txt
     """
-    with importlib.resources.open_binary("pSCTsimpipe.data", "DAMPE_proton_flux.txt") as f:
+    with importlib.resources.open_binary("psctsimpipe.data", "DAMPE_proton_flux.txt") as f:
         data = read_DAMPE_flux(f)    
         print("The DAMPE flux table reads as follows: \n")
         print(data.to_string())
@@ -218,10 +218,10 @@ def display_DAMPE_flux():
 def return_DAMPE_flux_table():
     """
     Returns the information contained in 
-    pSCTsimpipe/data/DAMPE_proton_flux.txt
+    psctsimpipe/data/DAMPE_proton_flux.txt
     in a pandas dataframe
     """
-    with importlib.resources.open_binary("pSCTsimpipe.data", "DAMPE_proton_flux.txt") as f:
+    with importlib.resources.open_binary("psctsimpipe.data", "DAMPE_proton_flux.txt") as f:
         data = read_DAMPE_flux(f)   
         return data
     

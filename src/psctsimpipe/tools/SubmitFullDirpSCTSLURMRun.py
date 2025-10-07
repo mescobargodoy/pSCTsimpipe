@@ -138,6 +138,11 @@ def main():
         default="END,FAIL",
         help="Type of email notification to receive"
         )
+    parser.add_argument(
+        "--suprres_stdout_error", 
+        default=False,
+        help="Whether to suppress the standard output and error of slurm report, by default False"
+        )
     args = parser.parse_args()
 
     corsika_files = find_files(args.input_dir,args.search_pattern)
@@ -166,6 +171,8 @@ def main():
         script_path = create_slurm_script(
             job_name, 
             command, 
+            'sim_telarray',
+            None,
             args.email, 
             args.output_dir, 
             args.mem, 
@@ -176,7 +183,8 @@ def main():
             args.partition,
             args.qos,
             args.account,
-            args.mail_type
+            args.mail_type,
+            args.suprres_stdout_error
             )
     
         submit_job(script_path)

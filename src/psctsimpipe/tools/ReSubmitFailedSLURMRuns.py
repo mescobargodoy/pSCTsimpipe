@@ -81,6 +81,11 @@ def main():
         default="END,FAIL",
         help="Type of email notification to receive"
         )
+    parser.add_argument(
+        "--suprres_stdout_error", 
+        default=False,
+        help="Whether to suppress the standard output and error of slurm report, by default False"
+        )
     args = parser.parse_args()
 
     failed_runs = extract_simtel_run_params(args.input_dir)
@@ -143,7 +148,8 @@ def main():
         # creating SLURM script
         script_path = create_slurm_script(
             job_name, 
-            command, 
+            command,
+            'sim_telarray', 
             args.email, 
             output_dir, 
             args.mem, 
@@ -154,7 +160,8 @@ def main():
             args.partition,
             args.qos,
             args.account,
-            args.mail_type
+            args.mail_type,
+            args.suprres_stdout_error
             )
 
         # Submitting job to queue
