@@ -41,7 +41,7 @@ def return_log_file_status(directory):
 
     return results
 
-def check_log_files(directory):
+def check_simtelarray_log_files(directory):
     """
     Checks all .out log files in the given directory 
     to ensure they end with "Sim_telarray finished".
@@ -79,6 +79,44 @@ def check_log_files(directory):
     print(f"{success} successful runs.")
     print(f"{failed} failed runs.")
 
+def check_corsika_log_files(directory):
+    """
+    Checks all .out log files in the given directory 
+    to ensure they end with "Sim_telarray finished".
+
+    Parameters
+    ----------
+    directory : string
+        directory where log files live
+
+    Returns
+    -------
+    None
+        Prints to terminal which files finished successfully
+        and which ones didn't.
+    """
+    log_ending = " ========== END OF RUN ================================================"    
+    success=0
+    failed=0
+    for filename in os.listdir(directory):
+        if filename.endswith(".out"):  
+            file_path = os.path.join(directory, filename)
+
+            try:
+                with open(file_path, "r") as f:
+                    lines = f.readlines()
+                    if lines and log_ending in lines[-1]:  # Check last line
+                        print(f"[✓] {filename} - Finished successfully")
+                        success+=1
+                    else:
+                        print(f"[X] {filename} - Did NOT finish successfully")
+                        failed+=1
+            except Exception as e:
+                print(f"[!] {filename} - Unable to read file: {e}")
+                failed+=1
+    print(f"Total runs submitted: {success+failed}")
+    print(f"{success} successful runs.")
+    print(f"{failed} failed runs.")
 
 def extract_naming_convention_from_output_files(filename):
     """

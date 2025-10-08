@@ -21,7 +21,11 @@ def main():
     submit-all-ctapipe-process-SLURM-run
     submit-multi-ctapipe-process-SLURM-run                                  
     submit-all-ctapipe-merge-SLURM-run
-    submit-multi-ctapipe-merge-SLURM-run"""
+    submit-multi-ctapipe-merge-SLURM-run
+    submit-single-corsika-SLURM-run
+    submit-multi-corsika-SLURM-run
+    compress-corsika-binaries
+    check-corsika-logs-status"""
     )
 
     print(available_tools)

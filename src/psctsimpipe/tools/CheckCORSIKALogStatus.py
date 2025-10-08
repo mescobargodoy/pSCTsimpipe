@@ -1,6 +1,6 @@
 import argparse
 
-from psctsimpipe.CheckSimTelArrayLogs import check_log_files
+from psctsimpipe.CheckSimTelArrayLogs import check_corsika_log_files
 
 def main():
     """
@@ -8,14 +8,15 @@ def main():
     or not. Status is printed out to terminal. 
     """    
     parser = argparse.ArgumentParser(
-        usage = """check-sim_telarray-logs-status \\
+        usage = """check-corsika-logs-status \\
             --input-dir <input_dir> \\
             """,
-        description="""Checks for sim_telarray logs to see
-        if Sim_telarray finished successfully.""",
+        description="""Checks for corsika logs to see
+        if  ========== END OF RUN ================================================.
+        is in file.""",
         epilog="""Example: \n 
-        check-logs-run-status 
-        --input-dir /your/sim_telarray/output_dir 
+        check-corsika-logs-status 
+        --input-dir /your/corsika/output_dir 
         """
         )
     
@@ -26,7 +27,7 @@ def main():
 
     args = parser.parse_args()
 
-    check_log_files(args.input_dir)
+    check_corsika_log_files(args.input_dir)
 
 if __name__ == "__main__":
     main()
