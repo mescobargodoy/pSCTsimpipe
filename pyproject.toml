@@ -25,9 +25,13 @@ dependencies = [
 ]
 
 [project.scripts]
+# corsika
+submit-single-corsika-SLURM-run = "psctsimpipe.tools.SubmitSingleCORSIKASLURMRun:main"
+submit-multi-corsika-SLURM-run = "psctsimpipe.tools.SubmitMultiCORSIKASLURMRuns:main"
+compress-corsika-binaries = "psctsimpipe.tools.CompressCORSIKABinaries:main"
 # sim_telarray
 add-histograms = "psctsimpipe.tools.AddHistograms:main"
-check-sim_telarray-logs-status = "psctsimpipe.tools.CheckLogStatus:main"
+check-sim_telarray-logs-status = "psctsimpipe.tools.CheckSimTelarrayLogStatus:main"
 psctsimpipe-tools = "psctsimpipe.tools.ShowTools:main"
 resubmit-psct-simtelarray-failed-SLURM-runs = "psctsimpipe.tools.ReSubmitFailedSLURMRuns:main"
 submit-single-simtelarray-SLURM-run = "psctsimpipe.tools.SubmitSingleSLURMRun:main"
@@ -42,6 +46,7 @@ submit-multi-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitMultiCtapipePr
 submit-single-ctapipe-process-SLURM-run = "psctsimpipe.tools.SubmitSingleCtapipeProcessSLURMRun:main"
 submit-all-ctapipe-merge-SLURM-run = "psctsimpipe.tools.SubmitFullDirCtapipeMergeSLURM:main"
 submit-multi-ctapipe-merge-SLURM-run = "psctsimpipe.tools.SubmitMultiCtapipeMergeSLURM:main"
+check-corsika-logs-status = "psctsimpipe.tools.CheckCORSIKALogsStatus:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
